@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive data visualizationa • rdataviz</title>
+<title>Interactive data visualizationa • Argus</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -30,7 +30,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">rdataviz</a>
+        <a class="navbar-link" href="index.html">Argus</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
@@ -44,7 +44,7 @@
   </a>
 </li>
 <li>
-  <a href="articles/vignette_rdataviz.html">
+  <a href="articles/vignette_argus.html">
     <span class="fas fa-book"></span>
      
     How-to
@@ -67,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/JGCRI/rdataviz/">
+  <a href="https://github.com/JGCRI/argus/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -110,13 +110,13 @@
 <!-- ------------------------>
 <p><a href="#Contents">Back to Contents</a></p>
 <ul>
-<li>Online App: <a href="https://zarrar.shinyapps.io/rdataviz/" class="uri">https://zarrar.shinyapps.io/rdataviz/</a>
+<li>Online App: <a href="https://zarrar.shinyapps.io/argus/" class="uri">https://zarrar.shinyapps.io/argus/</a>
 </li>
-<li>Github: <a href="https://github.com/JGCRI/rdataviz" class="uri">https://github.com/JGCRI/rdataviz</a>
+<li>Github: <a href="https://github.com/JGCRI/argus" class="uri">https://github.com/JGCRI/argus</a>
 </li>
-<li>Webpage: <a href="https://jgcri.github.io/rdataviz/" class="uri">https://jgcri.github.io/rdataviz/</a>
+<li>Webpage: <a href="https://jgcri.github.io/argus/" class="uri">https://jgcri.github.io/argus/</a>
 </li>
-<li>Cheatsheet: <a href="https://github.com/JGCRI/rmap/blob/master/rdataviz.pdf" class="uri">https://github.com/JGCRI/rmap/blob/master/rdataviz.pdf</a>
+<li>Cheatsheet: <a href="https://github.com/JGCRI/argus/blob/master/argus.pdf" class="uri">https://github.com/JGCRI/argus/blob/master/argus.pdf</a>
 </li>
 </ul>
 <!-- ------------------------><!-- ------------------------>
@@ -127,7 +127,7 @@
 <!-- ------------------------>
 <!-- ------------------------>
 <p><a href="#Contents">Back to Contents</a></p>
-<p><code>rdataviz</code> is an R Shiny App to interactively visualize data across scenarios, parameters and regions.</p>
+<p><code>argus</code> is an R Shiny App to interactively visualize data across scenarios, parameters and regions.</p>
 <!-- ------------------------>
 <!-- ------------------------>
 </div>
@@ -158,7 +158,7 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">install.packages</span>(“devtools”)</span>
 <span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(“JGCRI<span class="op">/</span>rgcam”)</span>
 <span id="cb1-3"><a href="#cb1-3"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(“JGCRI<span class="op">/</span>rmap”)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(“JGCRI<span class="op">/</span>rdataviz”)</span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(“JGCRI<span class="op">/</span>argus”)</span></code></pre></div>
 <!-- ------------------------>
 <!-- ------------------------>
 </div>
@@ -168,7 +168,7 @@
 <!-- ------------------------>
 <!-- ------------------------>
 <p><a href="#Contents">Back to Contents</a></p>
-<p>A detailed step-by-step walkthrough and how-to guide is provided on the <a href="https://jgcri.github.io/rdataviz/articles/vignette_rdataviz.html">How-to</a> page.</p>
+<p>A detailed step-by-step walkthrough and how-to guide is provided on the <a href="https://jgcri.github.io/argus/articles/vignette_argus.html">How-to</a> page.</p>
 <!-- ------------------------>
 <!-- ------------------------>
 </div>
@@ -186,9 +186,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/JGCRI/rdataviz/">https://​github.com/​JGCRI/​rdataviz/​</a>
+<li>Browse source code at <br><a href="https://github.com/JGCRI/argus/">https://​github.com/​JGCRI/​argus/​</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/JGCRI/rdataviz/issues">https://​github.com/​JGCRI/​rdataviz/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/JGCRI/argus/issues">https://​github.com/​JGCRI/​argus/​issues</a>
 </li>
 </ul>
 </div>
@@ -212,7 +212,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://codecov.io/gh/JGCRI/rdataviz"><img src="https://codecov.io/gh/JGCRI/rdataviz/branch/dev/graph/badge.svg?token=NDE0ZK7OHN" alt="codecov"></a></li>
+<li><a href="https://codecov.io/gh/JGCRI/argus"><img src="https://codecov.io/gh/JGCRI/argus/branch/dev/graph/badge.svg?token=NDE0ZK7OHN" alt="codecov"></a></li>
 </ul>
 </div>
 </div>
