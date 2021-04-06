@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cropped of GCAM Basins and US49 — mapGCAMBasinsUS49df • Argus</title>
+<title>process map — process_map • Argus</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Cropped of GCAM Basins and US49 — mapGCAMBasinsUS49df" />
-<meta property="og:description" content="Cropped of GCAM Basins and US49" />
+<meta property="og:title" content="process map — process_map" />
+<meta property="og:description" content="returns map" />
 
 
 
@@ -126,34 +126,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cropped of GCAM Basins and US49</h1>
-    <small class="dont-index">Source: <a href='https://github.com/JGCRI/argus/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>mapGCAMBasinsUS49df.Rd</code></div>
+    <h1>process map</h1>
+    <small class="dont-index">Source: <a href='https://github.com/JGCRI/argus/blob/master/R/server_functions.R'><code>R/server_functions.R</code></a></small>
+    <div class="hidden name"><code>process_map.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Cropped of GCAM Basins and US49</p>
+    <p>returns map</p>
     </div>
 
-    <pre class="usage"><span class='va'>mapGCAMBasinsUS49df</span></pre>
+    <pre class="usage"><span class='fu'>process_map</span><span class='op'>(</span><span class='va'>dataMap_raw</span>, <span class='va'>i</span>, <span class='va'>mapLegend</span>, <span class='va'>mapYear</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>dataMap_raw</th>
+      <td><p>input dataframe</p></td>
+    </tr>
+    <tr>
+      <th>i</th>
+      <td><p>the</p></td>
+    </tr>
+    <tr>
+      <th>mapLegend</th>
+      <td><p>map legend text</p></td>
+    </tr>
+    <tr>
+      <th>mapYear</th>
+      <td><p>the year of the map</p></td>
+    </tr>
+    </table>
 
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>R tibble</p>
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>JGCRI</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
- <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>sp</span><span class='op'>)</span>; <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/JGCRI/argus'>argus</a></span><span class='op'>)</span>; <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
- <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
- <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_polygon.html'>geom_polygon</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>mapGCAMBasinsUS49df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>long</span>, y <span class='op'>=</span> <span class='va'>lat</span>, group <span class='op'>=</span> <span class='va'>group</span><span class='op'>)</span>,
-             colour <span class='op'>=</span> <span class='st'>"black"</span>, fill <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
- <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>mapGCAMBasinsUS49df</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
