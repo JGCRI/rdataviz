@@ -25,7 +25,7 @@ library(mvbutils)
 # Options
 #---------------------------
 options(shiny.maxRequestSize=100*1024^2)
-options(shiny.trace = TRUE)
+#options(shiny.trace = TRUE)
 pal_all <- argus::mappings()$pal_all
 
 #---------------------------
@@ -34,6 +34,35 @@ pal_all <- argus::mappings()$pal_all
 
 server <- function(input, output, session) {
 
+  enableBookmarking(store = "server")
+  setBookmarkExclude(c("append", "close", "readfilebutton", "readurlbutton", "readgcambutton"))
+  onRestore(function(state) {
+    print(state)
+    state$input$filedata$datapath <- paste(state$dir, "/",state$input$filedata$datapath,sep="")
+    rv$filedatax = state$input$filedata
+    state$input$filedata <- NULL
+    showModal(
+      modalDialog(
+        size = "s",
+        easyClose = TRUE,
+        footer = NULL,
+        br(),
+        # CSV Data -------------------------------------
+        fileInput(
+          inputId = "filedata",
+          label = "Upload csv or zip file",
+          accept = c(".csv", ".zip"),
+          multiple = TRUE,
+          width = "100%",
+          placeholder = "No file selected"
+        ),
+        br(),
+        actionButton(inputId = "readfilebutton",
+                     label = "Read File Data")
+      ))
+    oofzll()
+
+  })
   #---------------------------
   # Load Default Datasets from argus
   #---------------------------
@@ -70,7 +99,8 @@ server <- function(input, output, session) {
             label = "Upload csv or zip file",
             accept = c(".csv", ".zip"),
             multiple = TRUE,
-            width = "100%"
+            width = "100%",
+            placeholder = "No file selected"
           ),
           br(),
           actionButton(inputId = "readfilebutton",
@@ -155,9 +185,7 @@ server <- function(input, output, session) {
     })
 
 
-  observeEvent(input$readurlbutton, {
-    removeModal()
-    #req(input$urlfiledata)
+  oofzll <- function(){
     showModal(
       modalDialog(
         size = "s",
@@ -181,6 +209,12 @@ server <- function(input, output, session) {
           )
         )
       ))
+  }
+
+  observeEvent(input$readurlbutton, {
+    removeModal()
+    #req(input$urlfiledata)
+    oofzll()
   })
 
 
@@ -188,33 +222,35 @@ server <- function(input, output, session) {
     input$readfilebutton, {
       print("oof")
       removeModal()
+      oofzll()
       #req(input$filedata)
-    showModal(
-      modalDialog(
-        size = "s",
-        easyClose = FALSE,
-        footer = NULL,
-        fluidRow(
-            column(6,
-              div(actionLink(
-                  inputId='append',
-                  label="Append to Input",
-                  class = "btn btn-default shiny-download-link download_button"),
-                  style = "float:center"
-                ))
-        ,
-        column(6,
-                div(actionLink(inputId="close",
-                                label='Overwrite Input',
-                                class = "btn btn-default shiny-download-link download_button"),
-                                style="float:right;!important"
-                 )
-          )
-        )
-    ))
+    # showModal(
+    #   modalDialog(
+    #     size = "s",
+    #     easyClose = FALSE,
+    #     footer = NULL,
+    #     fluidRow(
+    #         column(6,
+    #           div(actionLink(
+    #               inputId='append',
+    #               label="Append to Input",
+    #               class = "btn btn-default shiny-download-link download_button"),
+    #               style = "float:center"
+    #             ))
+    #     ,
+    #     column(6,
+    #             div(actionLink(inputId="close",
+    #                             label='Overwrite Input',
+    #                             class = "btn btn-default shiny-download-link download_button"),
+    #                             style="float:right;!important"
+    #              )
+    #       )
+    #     )
+    # ))
     }, ignoreInit=TRUE)
 
   observeEvent(input$loadsetting, {
+    print("ooftast")
     showModal(
       modalDialog(
         size = "s",
@@ -874,10 +910,10 @@ server <- function(input, output, session) {
       # res <- argus::parse_local(input$filedata$datapath[1], inpu$urlfiledata$datapath)%>%
       #   dplyr::select(scenario, subRegion, param, aggregate, class, x, value)
       res <- NULL
-      for (i in 1:length(input$filedata$datapath)){
+      for (i in 1:length(rv$filedatax$datapath)){
         print("lllllllllll")
-        print(input$filedata$datapath[i])
-        argus::parse_local(input$filedata$datapath[i], inpu$urlfiledata$datapath) %>%
+        print(rv$filedatax$datapath[i])
+        argus::parse_local(rv$filedatax$datapath[i], inpu$urlfiledata$datapath) %>%
             dplyr::select(scenario, subRegion, param, aggregate, class, x, value) -> a
         z<-argus::addMissing(a)
         print("oofz")

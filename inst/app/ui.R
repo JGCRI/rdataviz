@@ -17,6 +17,8 @@ library(shinyWidgets)
 
 ui <- fluidPage(
 
+  bookmarkButton(),
+
   #---------------------------
   # CSS/html
   #---------------------------
@@ -73,7 +75,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       # style="position: fixed; width:30%",
-  
+
       #fluidRow(
         #column(3,
           #actionButton("csv", "csv", width="100%")
@@ -87,7 +89,7 @@ ui <- fluidPage(
         #column(3)
         #),
         #class="action-button shiny-bound-input"
-      
+
       selectInput(
         inputId = "inputz",
         label = "Input",
