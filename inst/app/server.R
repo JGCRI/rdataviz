@@ -40,28 +40,30 @@ server <- function(input, output, session) {
     print(state)
     state$input$filedata$datapath <- paste(state$dir, "/",state$input$filedata$datapath,sep="")
     rv$filedatax = state$input$filedata
-    state$input$filedata <- NULL
-    showModal(
-      modalDialog(
-        size = "s",
-        easyClose = TRUE,
-        footer = NULL,
-        br(),
-        # CSV Data -------------------------------------
-        fileInput(
-          inputId = "filedata",
-          label = "Upload csv or zip file",
-          accept = c(".csv", ".zip"),
-          multiple = TRUE,
-          width = "100%",
-          placeholder = "No file selected"
-        ),
-        br(),
-        actionButton(inputId = "readfilebutton",
-                     label = "Read File Data")
-      ))
-    oofzll()
+    off <- data_raw()
+    rv$urlfiledatax=state$input$urlfiledata
+    oof <- data_raw()
 
+    # showModal(
+    #   modalDialog(
+    #     size = "s",
+    #     easyClose = TRUE,
+    #     footer = NULL,
+    #     br(),
+    #     # CSV Data -------------------------------------
+    #     fileInput(
+    #       inputId = "filedata",
+    #       label = "Upload csv or zip file",
+    #       accept = c(".csv", ".zip"),
+    #       multiple = TRUE,
+    #       width = "100%",
+    #       placeholder = "No file selected"
+    #     ),
+    #     br(),
+    #     actionButton(inputId = "readfilebutton",
+    #                  label = "Read File Data")
+    #   ))
+    oofzll()
   })
   #---------------------------
   # Load Default Datasets from argus
