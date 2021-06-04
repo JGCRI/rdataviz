@@ -35,89 +35,23 @@ pal_all <- argus::mappings()$pal_all
 server <- function(input, output, session) {
 
   enableBookmarking(store = "server")
-  setBookmarkExclude(c("append", "close", "readfilebutton", "readurlbutton", "readgcambutton"))
+  setBookmarkExclude(c("urlfiledata","filedata","filedata","append", "close", "readfilebutton", "readurlbutton", "readgcambutton", "inputz"))
+  #setBookmarkExclude(c("readfilebutton", "readurlbutton", "readgcambutton", "inputz"))
+
+
+  onBookmark(function(state) {
+    state$values$data <- rv$data
+  })
+
   onRestore(function(state) {
     print(state)
-    state$input$filedata$datapath <- paste(state$dir, "/",state$input$filedata$datapath,sep="")
-    rv$filedatax = state$input$filedata
-    rv$urlfiledatax=state$input$urlfiledata
+    #state$input$filedata$datapath <- paste(state$dir, "/",state$input$filedata$datapath,sep="")
+    rv$data <- state$values$data
+    #rv$filedatax = state$input$filedata
+    #rv$urlfiledatax=state$input$urlfiledata
 
-    showModal(
-      modalDialog(
-        size = "s",
-        easyClose = TRUE,
-        footer = NULL,
-        br(),
-        # CSV Data -------------------------------------
-        fileInput(
-          inputId = "filedata",
-          label = "Upload csv or zip file",
-          accept = c(".csv", ".zip"),
-          multiple = TRUE,
-          width = "100%",
-          placeholder = "No file selected"
-        ),
-        br(),
-        actionButton(inputId = "readfilebutton",
-                     label = "Read File Data")
-      ))
-    showModal(
-      modalDialog(
-        size = "m",
-        easyClose = TRUE,
-        footer = NULL,
-        br(),
-        p("*Note: Only for Argus run on local computer.", style="color:#cc0000"),
-        tabsetPanel(
-          type = "tabs",
-          id="gcamtabs",
-          tabPanel(
-            "gcamdatabase",
-            br(),
-            shinyDirButton(id = "gcamdir",
-                           label = "Choose GCAM directory",
-                           title = "Select"),
-            br(),
-            textInput(
-              inputId = "gcamdirfilepath",
-              label = NULL,
-              placeholder =  "OR Enter path to GCAM directory"),
-            br(),
-            verbatimTextOutput("gcamdirtext", placeholder = FALSE),
-            br(),
-            uiOutput('gcamScenarios'),
-          ),
-          tabPanel(
-            ".PROJ",
-            br(),
-            shinyFilesButton(id = "proj",
-                             label = "Choose GCAM .proj file",
-                             title = "Select",
-                             multiple=F),
-            br(),
-            textInput(
-              inputId = "gcamprojfilepath",
-              label = NULL,
-              placeholder =  "OR Enter path to GCAM .proj file"),
-            br(),
-            verbatimTextOutput("gcamprojtext", placeholder = FALSE),
-            br(),
-            uiOutput('gcamScenariosProj'),
-          )
-        ),
-
-        br(),
-        uiOutput('gcamParams'),
-        br(),
-        uiOutput('gcamRegions'),
-        br(),
-        actionButton(inputId = "readgcambutton",
-                     label = "Read GCAM Data"),
-        br(),
-        width = "100%"
-      )
-    )
-    oofzll()
+    #oofzll()
+    #removeModal()
   })
   #---------------------------
   # Load Default Datasets from argus
@@ -617,7 +551,7 @@ server <- function(input, output, session) {
 
   output$gcamdirtext <- renderText({
     if(rv_gcam$gcamdatabasepathx != "" & rv$validGCAM){
-    paste0("Reading GCAM data from: ", rv_gcam$gcamdatabasepathx)}
+      paste0("Reading GCAM data from: ", rv_gcam$gcamdatabasepathx)}
     else{
       "Awaiting Valid Input"
     }
@@ -822,29 +756,7 @@ server <- function(input, output, session) {
         dplyr::rename(class=class1)-> dataGCAM
       progress$inc(1/3, detail = paste("Load Complete", 3))
       rv$dataGCAM <- dataGCAM
-      showModal(
-        modalDialog(
-          size = "s",
-          easyClose = FALSE,
-          footer = NULL,
-          fluidRow(
-            column(6,
-                   div(actionLink(
-                     inputId='append',
-                     label="Append to Input",
-                     class = "btn btn-default shiny-download-link download_button"),
-                     style = "float:center"
-                   ))
-            ,
-            column(6,
-                   div(actionLink(inputId="close",
-                                  label='Overwrite Input',
-                                  class = "btn btn-default shiny-download-link download_button"),
-                       style="float:right;!important"
-                   )
-            )
-          )
-        ))
+      oofzll()
   }, ignoreInit = TRUE, once = TRUE)
 
 
@@ -855,7 +767,7 @@ server <- function(input, output, session) {
   # Create your own reactive values that you can modify because input is read only
   rv <- reactiveValues()
 
-  rv$validGcam <- FALSE
+  rv$validGCAM <- FALSE
   rv$pcount = 1;
   rv$mapflag = 0;
   rv$subRegTypelist = c()
@@ -955,7 +867,7 @@ server <- function(input, output, session) {
 
   # Read in Raw Data
   data_raw <- reactive({
-    print("oof")
+    print("oofx")
     if (is.null(rv$filedatax) & is.null(rv$dataGCAM) & (is.null(rv$urlfiledatax))) {
       return(argus::addMissing(
         dataDefault %>%
@@ -1255,11 +1167,11 @@ server <- function(input, output, session) {
   check <- function(){
     hidden_group <- data()$subRegion[which(!data()$subRegion %in% reactiveValuesToList(input)$regionsSelected)]
     for (i in unique(hidden_group)){
-      print(paste("hiding", " ", i))
+      #print(paste("hiding", " ", i))
       leafletProxy("mymap") %>% hideGroup(i)
     }
     for (i in unique(reactiveValuesToList(input)$regionsSelected)){
-      print(paste("showing", " ", i))
+      #print(paste("showing", " ", i))
       leafletProxy("mymap") %>% showGroup(i)
     }
     for (i in unique(rv$selectedBase)){

@@ -3,56 +3,12 @@ Warning in normalizePath(dbPath) :
 Warning: Error in rgcam::localDBConn: Database does not exist or is invalid: /
   120: stop
   119: rgcam::localDBConn
-  118: <reactive:gcamScenariosx> [/home/seantang001/Desktop/pnnl/argus/inst/app/server.R#649]
+  118: <reactive:gcamScenariosx> [/home/seantang001/Desktop/work/pnnl/argus/inst/app/server.R#583]
   102: gcamScenariosx
-   96: renderUI [/home/seantang001/Desktop/pnnl/argus/inst/app/server.R#690]
+   96: renderUI [/home/seantang001/Desktop/work/pnnl/argus/inst/app/server.R#624]
    95: func
    82: renderFunc
    81: output$gcamScenarios
     1: runApp
-Warning: Error in if: argument is of length zero
-  96: renderText [/home/seantang001/Desktop/pnnl/argus/inst/app/server.R#627]
-  95: func
-  82: renderFunc
-  81: output$gcamprojtext
-   1: runApp
-Warning: Error in if: argument is of length zero
-  119: rgcam::loadProject
-  118: <reactive:gcamScenariosxProj> [/home/seantang001/Desktop/pnnl/argus/inst/app/server.R#678]
-  102: gcamScenariosxProj
-   96: renderUI [/home/seantang001/Desktop/pnnl/argus/inst/app/server.R#706]
-   95: func
-   82: renderFunc
-   81: output$gcamScenariosProj
-    1: runApp
-Warning: Error in if: argument is of length zero
-  96: renderText [/home/seantang001/Desktop/pnnl/argus/inst/app/server.R#627]
-  95: func
-  82: renderFunc
-  81: output$gcamprojtext
-   1: runApp
-Warning in force(expr) :
-  Trying to restore saved app state, but UI code must be a function for this to work! See ?enableBookmarking
-Warning in if (!is.na(attribValue)) { :
-  the condition has length > 1 and only the first element will be used
-Warning: Error in writeImpl: Text to be written must be a length-one character vector
-  82: stop
-  81: writeImpl
-  80: textWriter$write
-  79: tagWrite
-  78: tagWrite
-  77: tagWrite
-  76: tagWrite
-  75: tagWrite
-  74: tagWrite
-  73: tagWrite
-  72: tagWrite
-  71: doRenderTags
-  70: processDeps
-  69: showModal
-  68: callback [/home/seantang001/Desktop/pnnl/argus/inst/app/server.R#64]
-  67: private$restoreCallbacks$invoke
-  44: <observer>
-   1: runApp
-Warning: Error in grepl: object 'inpu' not found
-  1: runApp
+
+
