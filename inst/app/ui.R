@@ -16,17 +16,8 @@ library(shinyWidgets)
 #---------------------------
 
 ui <- fluidPage(
-
-  bookmarkButton(),
-  downloadButton(
-    'bookmark',
-    "bookmark",
-    class = "download_button"
-  ),
-  fileInput(
-    inputId="loadbookmark",
-    label = "load rds",
-    accept = ".rds"),
+    
+    
   #---------------------------
   # CSS/html
   #---------------------------
@@ -41,10 +32,15 @@ ui <- fluidPage(
   useShinyalert(),
 
   tags$script("
-    Shiny.addCustomMessageHandler('rhm_clic', function(value) {
-    Shiny.setInputValue('regionsSelected', value);
+    Shiny.addCustomMessageHandler('setsetting', function(value) {
+    console.log(value);
+      Shiny.setInputValue(value[0], value.slice(1,value.length));
     });
+    $(document).on('shiny:inputchanged', function(event) {
+        console.log(event);
+      });
   "),
+
 
   #     <script async defer
   # 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5aevdcRxbI2nBJ8UGTh_m7kESdN0AVqA&callback=initMap">
@@ -69,7 +65,7 @@ ui <- fluidPage(
   div(actionLink(inputId='help', label='', icon = icon("question","fa-1x"),
                  onclick ="window.open('https://jgcri.github.io/argus/', '_blank')"),style="padding:15px 5px;float: right"),
   # div(style = "float:left;",fas fa-cog"
-  div(actionLink(inputId='loadsetting', label='', icon = icon("cog","fa-1x")
+  div(actionLink(inputId='loadsetting', label='', icon = icon("bookmark","fa-1x")
   ),style="padding:15px 5px;float:right"),
 
   titlePanel(
