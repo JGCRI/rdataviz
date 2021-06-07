@@ -35,8 +35,7 @@ pal_all <- argus::mappings()$pal_all
 server <- function(input, output, session) {
 
   enableBookmarking(store = "server")
-  enableBookmarking()
-  #setBookmarkExclude(c("urlfiledata","filedata","filedata","append", "close", "readfilebutton", "readurlbutton", "readgcambutton", "inputz"))
+  setBookmarkExclude(c("urlfiledata","filedata","filedata","append", "close", "readfilebutton", "readurlbutton", "readgcambutton", "inputz"))
   #setBookmarkExclude(c("readfilebutton", "readurlbutton", "readgcambutton", "inputz"))
 
 
@@ -92,7 +91,7 @@ server <- function(input, output, session) {
 
     #mapYear
     settingsmapYear <- state$mapYear
-    if((settingsmapYear %in% unique(dataMapx()$x))&&!is.null(settingsmapYear)){
+    if(!is.null(settingsmapYear) && (settingsmapYear %in% dataMapx()$x)){
       updateSliderInput(
         inputId = "mapYear",
         session=session,
@@ -163,6 +162,11 @@ server <- function(input, output, session) {
      # session$sendCustomMessage("setsetting", c("data", unique(dataSum()$scenario)))
     #state$input$filedata$datapath <- paste(state$dir, "/",state$input$filedata$datapath,sep="")
     rv$data <- state$values$data
+    updatePickerInput(
+      inputId = "mapLegend",
+      session=session,
+      selected = state$input$mapLegend
+    )
     #rv$filedatax = state$input$filedata
     #rv$urlfiledatax=state$input$urlfiledata
 
@@ -1365,6 +1369,7 @@ server <- function(input, output, session) {
       return(sort(unique(dataMapx()$x))[round(length(sort(unique(dataMapx()$x)))/2)])
     }
   })
+
 
   #---------------------------
   # Select Years for Map
