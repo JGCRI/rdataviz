@@ -35,6 +35,7 @@ pal_all <- argus::mappings()$pal_all
 server <- function(input, output, session) {
 
   enableBookmarking(store = "server")
+  enableBookmarking()
   #setBookmarkExclude(c("urlfiledata","filedata","filedata","append", "close", "readfilebutton", "readurlbutton", "readgcambutton", "inputz"))
   #setBookmarkExclude(c("readfilebutton", "readurlbutton", "readgcambutton", "inputz"))
 
@@ -101,7 +102,6 @@ server <- function(input, output, session) {
       )
       session$sendCustomMessage("setsetting", c("mapYear", settingsmapYear))
     }
-    browser()
     #subsetRegions
     settingsSubsetRegions <- state$subsetRegions
     if(any(unique(settingsSubsetRegions) %in% unique(data()$subRegion))){
@@ -382,7 +382,7 @@ server <- function(input, output, session) {
           ,
           column(6,
                  div(
-                 
+
                    #bookmarkButton(),
                    actionLink(inputId="._bookmark_",
                                 label="Bookmark URL",
@@ -921,70 +921,70 @@ server <- function(input, output, session) {
   eventReactive(input$urlfiledata, {
     rv$filedatax=NULL})
 
-  addMissing<-function(data){
-      NULL -> year -> aggregate -> scenario -> subRegion -> param -> x -> value
-      print("iif")
-      print(names(data))
-     if(!any(grepl("\\<scenario\\>",names(data),ignore.case = T))){
-       data<-data%>%dplyr::mutate(scenario="scenario")
-     }else{
-      data <- data %>% dplyr::rename(!!"scenario" := (names(data)[grepl("\\<scenario\\>",names(data),ignore.case = T)])[1])
-      for (i in 1:length(names(data))){
-         print(typeof(names(data)))
-         }
-             #browser()
-       data<-data%>%dplyr::mutate(scenario=dplyr::case_when(is.na(scenario)~"scenario",TRUE~as.character(scenario)))
-     }
-     print("xiif")
-     if(!any(grepl("\\<scenarios\\>",names(data),ignore.case = T))){}else{
-       data <- data %>% dplyr::rename(!!"scenario" := (names(data)[grepl("\\<scenarios\\>",names(data),ignore.case = T)])[1])
-       data<-data%>%dplyr::mutate(scenario=dplyr::case_when(is.na(scenario)~"scenario",TRUE~as.character(scenario)))}
-     if(!any(grepl("\\<subRegion\\>",names(data),ignore.case = T))){data<-data%>%dplyr::mutate(subRegion="subRegion")}else{
-      data <- data %>% dplyr::rename(!!"subRegion" := (names(data)[grepl("\\<subRegion\\>",names(data),ignore.case = T)])[1])
-      data<-data%>%dplyr::mutate(subRegion=dplyr::case_when(is.na(subRegion)~"subRegion",TRUE~as.character(subRegion)))}
-     if(!any(grepl("\\<subRegions\\>",names(data),ignore.case = T))){}else{
-       data <- data %>% dplyr::rename(!!"subRegion" := (names(data)[grepl("\\<subRegions\\>",names(data),ignore.case = T)])[1])
-       data<-data%>%dplyr::mutate(subRegion=dplyr::case_when(is.na(subRegion)~"subRegion",TRUE~as.character(subRegion)))}
-     if(!any(grepl("\\<param\\>",names(data),ignore.case = T))){data<-data%>%dplyr::mutate(param="param")}else{
-       data <- data %>% dplyr::rename(!!"param" := (names(data)[grepl("\\<param\\>",names(data),ignore.case = T)])[1])
-       data<-data%>%dplyr::mutate(param=dplyr::case_when(is.na(param)~"param",TRUE~as.character(param)))}
-     if(!any(grepl("\\<params\\>",names(data),ignore.case = T))){}else{
-       data <- data %>% dplyr::rename(!!"param" := (names(data)[grepl("\\<params\\>",names(data),ignore.case = T)])[1])
-       data<-data%>%dplyr::mutate(param=dplyr::case_when(is.na(param)~"param",TRUE~as.character(param)))}
-     if(!any(grepl("\\<value\\>",names(data),ignore.case = T))){stop("Data must have 'value' column.")}else{
-       data <- data %>% dplyr::rename(!!"value" := (names(data)[grepl("\\<value\\>",names(data),ignore.case = T)])[1])
-       data$value = as.numeric(data$value)
-       data<-data%>%dplyr::mutate(value=dplyr::case_when(is.na(value)~0,TRUE~value))}
-     if(!any(grepl("\\<values\\>",names(data),ignore.case = T))){}else{
-       data <- data %>% dplyr::rename(!!"value" := (names(data)[grepl("\\<values\\>",names(data),ignore.case = T)])[1])
-       data$value = as.numeric(data$value)
-       data<-data%>%dplyr::mutate(value=dplyr::case_when(is.na(value)~0,TRUE~value))}
-     if(!any(grepl("\\<unit\\>",names(data),ignore.case = T))){}else{
-       data <- data %>% dplyr::rename(!!"units" := (names(data)[grepl("\\<unit\\>",names(data),ignore.case = T)])[1])
-       data<-data%>%dplyr::mutate(units=dplyr::case_when(is.na(units)~"units",TRUE~as.character(units)))}
-     if(!any(grepl("\\<units\\>",names(data),ignore.case = T))){data<-data%>%dplyr::mutate(units="units")}else{
-       data <- data %>% dplyr::rename(!!"units" := (names(data)[grepl("\\<units\\>",names(data),ignore.case = T)])[1])
-       data<-data%>%dplyr::mutate(units=dplyr::case_when(is.na(units)~"units",TRUE~as.character(units)))}
-     if(!"x"%in%names(data)){
-      if("year"%in%names(data)){
-         data<-data%>%dplyr::mutate(x=year)}else{data<-data%>%dplyr::mutate(x="x")}}
-     if(!any(grepl("\\<aggregate\\>",names(data),ignore.case = T))){
-     if(is.null(aggregate)){data<-data%>%dplyr::mutate(aggregate="sum")}else{
-         data<-data%>%dplyr::mutate(aggregate="sum")}
-     }else{
-       data <- data %>% dplyr::rename(!!"aggregate" := (names(data)[grepl("\\<aggregate\\>",names(data),ignore.case = T)])[1])
-       data<-data%>%dplyr::mutate(aggregate=dplyr::case_when(is.na(aggregate)~"sum",
-                                                           TRUE~as.character(aggregate)))}
-     if(!any(grepl("\\<class\\>",names(data),ignore.case = T))){
-       if(!any(grepl("\\<class\\>",names(data),ignore.case = T))){
-         data<-data%>%dplyr::mutate(class="class")}else{data<-data%>%dplyr::mutate(class=class)}}else{
-           data <- data %>% dplyr::rename(!!"class" := (names(data)[grepl("\\<class\\>",names(data),ignore.case = T)])[1])
-           data<-data%>%dplyr::mutate(class=dplyr::case_when(is.na(class)~"class",TRUE~as.character(class)))}
-  
-     data <- data %>%
-       dplyr::select(scenario,subRegion,param,class,x,aggregate,value)
-       return(data)
-   }
+  # addMissing<-function(data){
+  #     NULL -> year -> aggregate -> scenario -> subRegion -> param -> x -> value
+  #     print("iif")
+  #     print(names(data))
+  #    if(!any(grepl("\\<scenario\\>",names(data),ignore.case = T))){
+  #      data<-data%>%dplyr::mutate(scenario="scenario")
+  #    }else{
+  #     data <- data %>% dplyr::rename(!!"scenario" := (names(data)[grepl("\\<scenario\\>",names(data),ignore.case = T)])[1])
+  #     for (i in 1:length(names(data))){
+  #        print(typeof(names(data)))
+  #        }
+  #            #browser()
+  #      data<-data%>%dplyr::mutate(scenario=dplyr::case_when(is.na(scenario)~"scenario",TRUE~as.character(scenario)))
+  #    }
+  #    print("xiif")
+  #    if(!any(grepl("\\<scenarios\\>",names(data),ignore.case = T))){}else{
+  #      data <- data %>% dplyr::rename(!!"scenario" := (names(data)[grepl("\\<scenarios\\>",names(data),ignore.case = T)])[1])
+  #      data<-data%>%dplyr::mutate(scenario=dplyr::case_when(is.na(scenario)~"scenario",TRUE~as.character(scenario)))}
+  #    if(!any(grepl("\\<subRegion\\>",names(data),ignore.case = T))){data<-data%>%dplyr::mutate(subRegion="subRegion")}else{
+  #     data <- data %>% dplyr::rename(!!"subRegion" := (names(data)[grepl("\\<subRegion\\>",names(data),ignore.case = T)])[1])
+  #     data<-data%>%dplyr::mutate(subRegion=dplyr::case_when(is.na(subRegion)~"subRegion",TRUE~as.character(subRegion)))}
+  #    if(!any(grepl("\\<subRegions\\>",names(data),ignore.case = T))){}else{
+  #      data <- data %>% dplyr::rename(!!"subRegion" := (names(data)[grepl("\\<subRegions\\>",names(data),ignore.case = T)])[1])
+  #      data<-data%>%dplyr::mutate(subRegion=dplyr::case_when(is.na(subRegion)~"subRegion",TRUE~as.character(subRegion)))}
+  #    if(!any(grepl("\\<param\\>",names(data),ignore.case = T))){data<-data%>%dplyr::mutate(param="param")}else{
+  #      data <- data %>% dplyr::rename(!!"param" := (names(data)[grepl("\\<param\\>",names(data),ignore.case = T)])[1])
+  #      data<-data%>%dplyr::mutate(param=dplyr::case_when(is.na(param)~"param",TRUE~as.character(param)))}
+  #    if(!any(grepl("\\<params\\>",names(data),ignore.case = T))){}else{
+  #      data <- data %>% dplyr::rename(!!"param" := (names(data)[grepl("\\<params\\>",names(data),ignore.case = T)])[1])
+  #      data<-data%>%dplyr::mutate(param=dplyr::case_when(is.na(param)~"param",TRUE~as.character(param)))}
+  #    if(!any(grepl("\\<value\\>",names(data),ignore.case = T))){stop("Data must have 'value' column.")}else{
+  #      data <- data %>% dplyr::rename(!!"value" := (names(data)[grepl("\\<value\\>",names(data),ignore.case = T)])[1])
+  #      data$value = as.numeric(data$value)
+  #      data<-data%>%dplyr::mutate(value=dplyr::case_when(is.na(value)~0,TRUE~value))}
+  #    if(!any(grepl("\\<values\\>",names(data),ignore.case = T))){}else{
+  #      data <- data %>% dplyr::rename(!!"value" := (names(data)[grepl("\\<values\\>",names(data),ignore.case = T)])[1])
+  #      data$value = as.numeric(data$value)
+  #      data<-data%>%dplyr::mutate(value=dplyr::case_when(is.na(value)~0,TRUE~value))}
+  #    if(!any(grepl("\\<unit\\>",names(data),ignore.case = T))){}else{
+  #      data <- data %>% dplyr::rename(!!"units" := (names(data)[grepl("\\<unit\\>",names(data),ignore.case = T)])[1])
+  #      data<-data%>%dplyr::mutate(units=dplyr::case_when(is.na(units)~"units",TRUE~as.character(units)))}
+  #    if(!any(grepl("\\<units\\>",names(data),ignore.case = T))){data<-data%>%dplyr::mutate(units="units")}else{
+  #      data <- data %>% dplyr::rename(!!"units" := (names(data)[grepl("\\<units\\>",names(data),ignore.case = T)])[1])
+  #      data<-data%>%dplyr::mutate(units=dplyr::case_when(is.na(units)~"units",TRUE~as.character(units)))}
+  #    if(!"x"%in%names(data)){
+  #     if("year"%in%names(data)){
+  #        data<-data%>%dplyr::mutate(x=year)}else{data<-data%>%dplyr::mutate(x="x")}}
+  #    if(!any(grepl("\\<aggregate\\>",names(data),ignore.case = T))){
+  #    if(is.null(aggregate)){data<-data%>%dplyr::mutate(aggregate="sum")}else{
+  #        data<-data%>%dplyr::mutate(aggregate="sum")}
+  #    }else{
+  #      data <- data %>% dplyr::rename(!!"aggregate" := (names(data)[grepl("\\<aggregate\\>",names(data),ignore.case = T)])[1])
+  #      data<-data%>%dplyr::mutate(aggregate=dplyr::case_when(is.na(aggregate)~"sum",
+  #                                                          TRUE~as.character(aggregate)))}
+  #    if(!any(grepl("\\<class\\>",names(data),ignore.case = T))){
+  #      if(!any(grepl("\\<class\\>",names(data),ignore.case = T))){
+  #        data<-data%>%dplyr::mutate(class="class")}else{data<-data%>%dplyr::mutate(class=class)}}else{
+  #          data <- data %>% dplyr::rename(!!"class" := (names(data)[grepl("\\<class\\>",names(data),ignore.case = T)])[1])
+  #          data<-data%>%dplyr::mutate(class=dplyr::case_when(is.na(class)~"class",TRUE~as.character(class)))}
+  #
+  #    data <- data %>%
+  #      dplyr::select(scenario,subRegion,param,class,x,aggregate,value)
+  #      return(data)
+  #  }
 
   # Read in Raw Data
   data_raw <- reactive({
@@ -1002,10 +1002,9 @@ server <- function(input, output, session) {
       for (i in 1:length(rv$filedatax$datapath)){
         print("lllllllllll")
         print(rv$filedatax$datapath[i])
-        #argus::
-        parse_local(rv$filedatax$datapath[i], inpu$urlfiledata$datapath) %>%
+        argus::parse_local(rv$filedatax$datapath[i], inpu$urlfiledata$datapath) %>%
             dplyr::select(scenario, subRegion, param, aggregate, class, x, value) -> a
-        z<-addMissing(a)
+        z<-argus::addMissing(a)
         print("oofz")
         res <- dplyr::bind_rows(res, z)
       }
@@ -1359,14 +1358,22 @@ server <- function(input, output, session) {
   })
 
 
+  mapYearx <- reactive({
+    if(!is.null(input$mapYear)){
+      return(input$mapYear)
+    }else{
+      return(sort(unique(dataMapx()$x))[round(length(sort(unique(dataMapx()$x)))/2)])
+    }
+  })
+
   #---------------------------
   # Select Years for Map
   #---------------------------
   output$selectMapYear = renderUI({
-    browser()
     sliderInput("mapYear", label = h3("Select Year"), min = min(dataMapx()$x),
                 max = max(dataMapx()$x), step = 5,
-                value=sort(unique(dataMapx()$x))[round(length(sort(unique(dataMapx()$x)))/2)], sep="",
+                value=mapYearx(),
+                sep="",
                 animate =F)
   })
 
