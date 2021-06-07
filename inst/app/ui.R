@@ -18,7 +18,15 @@ library(shinyWidgets)
 ui <- fluidPage(
 
   bookmarkButton(),
-
+  downloadButton(
+    'bookmark',
+    "bookmark",
+    class = "download_button"
+  ),
+  fileInput(
+    inputId="loadbookmark",
+    label = "load rds",
+    accept = ".rds"),
   #---------------------------
   # CSS/html
   #---------------------------

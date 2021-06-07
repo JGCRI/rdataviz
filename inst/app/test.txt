@@ -9,6 +9,6 @@ Warning: Error in rgcam::localDBConn: Database does not exist or is invalid: /
    95: func
    82: renderFunc
    81: output$gcamScenarios
-    1: runApp
+    1: shiny::runApp
 
 

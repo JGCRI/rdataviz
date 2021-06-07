@@ -39,6 +39,115 @@ server <- function(input, output, session) {
   #setBookmarkExclude(c("readfilebutton", "readurlbutton", "readgcambutton", "inputz"))
 
 
+  output$bookmark <- downloadHandler(
+    filename <- "bookmark.rds",
+    content = function(file){
+      state <- isolate(reactiveValuesToList(input))
+      state$data <- rv$data
+      saveRDS(state, file)
+    }
+  )
+
+  observeEvent(input$loadbookmark, {
+    state <- readRDS(input$loadbookmark$datapath)
+    rv$data <- state$data
+    print(state)
+
+
+    settingsVars <- c("regionsSelect",
+                      "scenariosSelect",
+                      "scenarioRefSelect",
+                      "paramsSelect",
+                      "mapLegend",
+                      "mapYear",
+                      "subsetRegions")
+    #mapLegend
+    # pickerInput(
+    #   inputId = "mapLegend",
+    #   label = "Legend Type",
+    #   choices = c("kmean","pretty"),
+    #   selected = "kmean",
+    #   multiple = F)))
+
+    #mapLegend
+    settingsmapYear <- state$mapYear
+    if(settingsmapYear %in% c("kmean","pretty")){
+      updatePickerInput(
+        inputId = "mapYear",
+        session=session,
+        selected = settingsmapYear
+      )
+    }
+
+    #mapYear
+    # sliderInput("mapYear", label = h3("Select Year"), min = min(dataMapx()$x),
+    #             max = max(dataMapx()$x), step = 5,
+    #             value=sort(unique(dataMapx()$x))[round(length(sort(unique(dataMapx()$x)))/2)], sep="",
+    #             animate =F)
+
+    #mapYear
+    settingsmapYear <- state$mapYear
+    if(settingsmapYear %in% unique(dataMapx()$x)){
+      updateSliderInput(
+        inputId = "mapYear",
+        session=session,
+        min = min(dataMapx()$x),
+        max = max(dataMapx()$x),
+        value=sort(unique(dataMapx()$x))[round(length(sort(unique(dataMapx()$x)))/2)]
+      )
+    }
+
+    #subsetRegions
+    settingsSubsetRegions <- state$subsetRegions
+    if(any(unique(settingsSubsetRegions) %in% unique(data()$subRegion))){
+      print("c==c")
+      updatePickerInput(
+        inputId = "subsetRegions",
+        session=session,
+        choices = unique(data()$subRegion),
+        selected = state$subsetRegions)
+      print(state$subsetRegions)
+    }
+
+    # Regions Update
+    settingsRegions <- state$regionsSelect
+    if(any(unique(settingsRegions) %in% unique(data()$subRegion))){
+      updatePickerInput(
+        session=session,
+        inputId = "regionsSelected",
+        selected = unique(settingsRegions)[unique(settingsRegions) %in% unique(data()$subRegion)],
+      )
+    }
+    # Parameters Update
+    settingsParams <- state$paramsSelect
+    if(any(unique(settingsParams) %in% unique(data()$param))){
+      updatePickerInput(
+        session=session,
+        inputId = "paramsSelected",
+        selected = unique(settingsParams)[unique(settingsParams) %in% unique(data()$param)],
+      )
+    }
+
+    # Scenario Update
+    settingsScenario <- state$scenariosSelect
+    if(any(unique(settingsScenario) %in% unique(data()$scenario))){
+      updatePickerInput(
+        session=session,
+        inputId = "scenariosSelected",
+        selected = unique(settingsScenario)[unique(settingsScenario) %in% unique(data()$scenario)],
+      )
+    }
+    # Reference Scenario Update
+    settingsRefScenario <- state$scenarioRefSelect
+    if(any(unique(settingsRefScenario) %in% unique(data()$scenario))){
+      updatePickerInput(
+        session=session,
+        inputId = "scenarioRefSelected",
+        selected = unique(settingsRefScenario)[unique(settingsRefScenario) %in% unique(data()$scenario)],
+      )
+    }
+  })
+
   onBookmark(function(state) {
     state$values$data <- rv$data
   })
@@ -338,6 +447,7 @@ server <- function(input, output, session) {
           (settings()%>%dplyr::filter(variable=="regionsSelect"))$value
           ,split=";")
       )
+
       if(any(unique(settingsRegions) %in% unique(data()$subRegion))){
       updatePickerInput(
         session=session,
